@@ -1,0 +1,241 @@
+{ 
+    "imposters": [
+        {
+            "port": 2005,
+            "protocol": "http",
+            "name": "Book Store",
+            "stubs": [
+                {
+                    "predicates": [
+                        {
+                            "equals": {
+                                "method": "GET",
+                                "path": "/api/books"
+                            }
+                        }             
+                    ],          
+                    "responses": [
+                        {
+                            "is": {
+                                "statusCode": 200,
+                                "headers": {
+                                    "Content-Type": "application/json"
+                                },
+                                "body": "[]"
+                            }
+                        },
+                        {
+                            "is": {
+                                "statusCode": 200,
+                                "headers": {
+                                    "Content-Type": "application/json"
+                                },
+                                "body": "[{ \"id\": 1, \"author\": \"John Smith\", \"title\": \"Reliability of late night deployments\" }, { \"id\": 2, \"author\": \"Jane Archer\", \"title\": \"DevOps is a lie\" }]"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "predicates": [
+                        {
+                            "equals": {
+                                "method": "GET",
+                                "path": "/api/books/1"
+                            }
+                        }             
+                    ],          
+                    "responses": [
+                        {
+                            "is": {
+                                "statusCode": 200,
+                                "headers": {
+                                    "Content-Type": "application/json"
+                                },
+                                "body": "{ \"id\": 1, \"author\": \"John Smith\", \"title\": \"Reliability of late night deployments\" }"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "predicates": [
+                        {
+                            "equals": {
+                                "method": "GET",
+                                "path": "/api/books/2"
+                            }
+                        }             
+                    ],          
+                    "responses": [
+                        {
+                            "is": {
+                                "statusCode": 200,
+                                "headers": {
+                                    "Content-Type": "application/json"
+                                },
+                                "body": " { \"id\": 2, \"author\": \"Jane Archer\", \"title\": \"DevOps is a lie\" }"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "predicates": [
+                        {
+                            "equals": {
+                                "method": "GET",
+                                "path": "/api/books/3"
+                            }
+                        }             
+                    ],          
+                    "responses": [
+                        {
+                            "is": {
+                                "statusCode": 200,
+                                "headers": {
+                                    "Content-Type": "application/json"
+                                },
+                                "body": " { \"id\": 3, \"author\": \"Muge Kilic\", \"title\": \"Trendyol\" }"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "predicates": [
+                        {
+                            "equals": {
+                                "method": "PUT",
+                                "path": "/api/books"
+                            }
+                        },
+                        {
+                            "equals": { "body": "{\"title\": \"DevOps is a lie\", \"author\": \"Jane Archer\"}" },
+                            "caseSensitive": true,
+                            "except": "!$"
+                        }         
+                    ],          
+                    "responses": [
+                        {
+                            "is": {
+                                "statusCode": 400,
+                                "headers": {
+                                    "Content-Type": "application/json"
+                                },
+                                "body": "{\"error\": \"Another book with similar title and author already exists.\"}"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "predicates": [
+                        {
+                            "equals": {
+                                "method": "PUT",
+                                "path": "/api/books"
+                            }
+                        },
+                        {
+                            "equals": { "body": "{\"title\": \"\", \"author\": \"Jane Archer\"}" },
+                            "caseSensitive": true,
+                            "except": "!$"
+                        }         
+                    ],          
+                    "responses": [
+                        {
+                            "is": {
+                                "statusCode": 400,
+                                "headers": {
+                                    "Content-Type": "application/json"
+                                },
+                                "body": "{\"error\": \"Field <title> is required.\"}"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "predicates": [
+                        {
+                            "equals": {
+                                "method": "PUT",
+                                "path": "/api/books"
+                            }
+                        },
+                        {
+                            "equals": { "body": "{\"title\": \"Test\", \"author\": \"\"}" },
+                            "caseSensitive": true,
+                            "except": "!$"
+                        }         
+                    ],          
+                    "responses": [
+                        {
+                            "is": {
+                                "statusCode": 400,
+                                "headers": {
+                                    "Content-Type": "application/json"
+                                },
+                                "body": "{\"error\": \"Field <author> is required.\"}"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "predicates": [
+                        {
+                            "equals": {
+                                "method": "PUT",
+                                "path": "/api/books"
+                            }
+                        },
+                        {
+                            "equals": { "body": "{\"author\": \"Muge Kilic\", \"title\": \"Trendyol\"}" },
+                            "caseSensitive": true,
+                            "except": "!$"
+                        }         
+                    ],          
+                    "responses": [
+                        {
+                            "is": {
+                                "statusCode": 201,
+                                "headers": {
+                                    "Content-Type": "application/json"
+                                },
+                                "body": "{\"id\": 3, \"author\": \"Muge Kilic\", \"title\": \"Trendyol\"}"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "predicates": [
+                        {
+                            "equals": {
+                                "method": "PUT",
+                                "path": "/api/books"
+                            }
+                        },
+                        {
+                            "equals": { "body": "{\"id\": 4, \"author\": \"John Carmack\", \"title\": \"Modern Game Development\"}" },
+                            "caseSensitive": true,
+                            "except": "!$"
+                        }         
+                    ],          
+                    "responses": [
+                        {
+                            "is": {
+                                "statusCode": 400,
+                                "headers": {
+                                    "Content-Type": "application/json"
+                                },
+                                "body": "{\"error\": \"Id field should be read-only.\"}"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "responses": [
+                        {
+                            "is": { "statusCode": 404 }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
